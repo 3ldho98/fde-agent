@@ -20,31 +20,40 @@ It listens first, maps the customer's world, then ships a working integration or
 
 ## 🧭 What is this?
 
-A **Forward Deployed Engineer (FDE)** works side by side with the customer: reads their systems, wires things together, and puts a real demo in front of them, fast.
+A **Forward Deployed Engineer (FDE)** sits with the customer, listens to their idea, and puts a real working demo in front of them, fast.
 
-This repo turns your AI agent into one. It is just a prompt file, so there is nothing to run and nothing to configure.
+This repo turns your AI agent into one. **No coding knowledge needed:** the customer describes the app in everyday words, and the agent builds it, tests it and hands over a demo script, all within one day.
 
-## ⚙️ How it works
+> Built for demo day: the agent agrees one clear **Golden path** with the customer, then makes sure that exact flow **never breaks**. It rehearses it 3 times from a reset, removes dead ends, fails softly, and never depends on a live service it hasn't tested.
 
-<img src="assets/workflow.svg" alt="Listen, Map, Slice, Build, Show, Hand off" width="100%">
+## ⚙️ The whole process: 3 steps
 
-| Step | What the agent does |
+<img src="assets/workflow.svg" alt="Ask, Agree, Build, Rehearse, Demo, Hand off" width="100%">
+
+| Step | What happens |
 |---|---|
-| **1. Listen** | Restates the goal in one sentence. Asks at most 2 questions, only ones that block progress. |
-| **2. Map** | Finds the customer's systems, APIs, auth, data shape and users before coding. |
-| **3. Slice** | Picks the thinnest end-to-end flow that shows real value. Demoable today. |
-| **4. Build** | Reuses their stack and official SDKs first. Mocks what isn't reachable yet. |
-| **5. Show** | Runs it and gives exact steps to see it working. |
-| **6. Hand off** | Leaves a README, known gaps and next steps. |
+| **1. Ask** | One message with up to 5 plain questions (each with a default). Then a **Demo contract**: what the app does, the **Golden path** (the exact click-by-click flow), and 3 to 5 checks that mean "yes, it works". |
+| **2. Build** | The smallest app that meets the contract, with realistic sample data, a one-command start and a one-command reset. Nothing extra. |
+| **3. Prove** | Rehearse the Golden path 3 times from a reset. No dead ends, friendly errors instead of crashes, live services mocked or tested offline. Then freeze. |
+
+You then get a 5-minute demo script, a fallback plan and a plain-words summary.
+
+### The one command to remember
+
+```text
+/fde-build  a booking app for my salon where customers pick a time slot
+```
+
+In agents without slash commands, type `build: <your idea>`.
 
 ## ✨ Why use it
 
 | A typical agent | The Forward Deployed Engineer |
 |---|---|
-| Starts coding right away | Understands the customer's systems first |
+| Starts coding right away | Agrees a Demo contract first |
 | Builds the whole thing | Ships the thinnest working slice |
 | Hardcodes keys and URLs | Secrets in env vars, config in one place |
-| Says "done" | Says what's **done, assumed, not checked, and next** |
+| Says "done" | Says what was **rehearsed, what is mocked, and what is next** |
 | Prototype looks like production | Labels every build: Prototype, Pilot or Production |
 
 ## 📦 Install
@@ -88,28 +97,42 @@ Run these as two separate prompts:
 
 | Command | Plain-text trigger | What it does |
 |---|---|---|
-| `/fde-scope` | `scope: <problem>` | Restates the goal, lists the systems, proposes the thinnest slice and a plan |
-| `/fde-demo` | `demo: <thing>` | Builds and shows the smallest working version |
-| `/fde-handoff` | `handoff:` | Writes the README, lists gaps, next steps and owners |
-| `/fde-risks` | `risks:` | Lists what could break and how to check each item |
+| `/fde-build` | `build: <idea>` | The full process: ask, contract, build, prove, demo script |
+| `/fde-check` | `check:` | Rehearses the Golden path 3 times and reports PASS/FAIL |
+| `/fde-scope` | `scope: <problem>` | Only the questions and the Demo contract, no code yet |
+| `/fde-demo` | `demo:` | Writes or refreshes the demo script |
+| `/fde-handoff` | `handoff:` | Short README: how to run it, gaps, next steps |
+| `/fde-risks` | `risks:` | What could break and how to check each item |
 
 The slash commands work in Claude Code. In any other agent, type the plain-text trigger.
 
 ## 💬 Example
 
 ```text
-You:    scope: Acme wants new Shopify orders to show up in their Slack channel
+Customer: build: a booking app for my salon where customers pick a time slot
 
-FDE:    Got it: every new Shopify order should post to an Acme Slack channel.
-        Systems: Shopify (order webhook), Slack (incoming message API).
-        Thinnest slice: one small webhook receiver that formats the order
-        and posts it to a test channel. Demoable today.
-        One thing I need: a Slack test channel and a webhook URL.
+FDE:      Happy to! Five quick questions (reply "yes" to accept my guesses):
+          1. Goal: let customers book a slot without calling you?   [yes]
+          2. Users: customers on phones, you on a laptop?           [yes]
+          3. Must-do in the demo: pick a service, a time, see confirmation. [yes]
+          4. Existing data: none, I'll use sample services/stylists. [yes]
+          5. Success: a booking shows up in your list instantly.    [yes]
 
-        Done:        scoped the slice and picked the integration points
-        Assumed:     orders arrive via Shopify's order-created webhook
-        Not checked: Acme's rate limits and Slack workspace permissions
-        Next step:   share the test channel and I'll build the demo
+Customer: yes to all
+
+FDE:      Demo contract agreed. It is done when:
+          Golden path: open app > pick "Haircut" > pick tomorrow 3pm > enter name > see confirmation > open the bookings page
+          - A customer can book a haircut for tomorrow at 3pm in under 30 seconds
+          - Two people can't book the same slot
+          - You can see all bookings on one page
+          Building now...
+
+          You can now:       open the app and book a slot
+          How to run it:     python app.py
+          I rehearsed:       Golden path 3 out of 3 passes
+          To reset the demo: python reset.py
+          Not included yet:  payments, reminders (listed under "Later")
+          I need from you:   your real service list when you're ready
 ```
 
 ## 🛡️ Safety rules
