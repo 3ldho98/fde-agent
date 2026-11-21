@@ -75,11 +75,11 @@ Copy [`AGENTS.md`](AGENTS.md) into your project root. Done.
 Run these as two separate prompts:
 
 ```
-/plugin marketplace add 3ldho98/forward-deployed-engineer-agent
+/plugin marketplace add 3ldho98/fde-agent
 ```
 
 ```
-/plugin install forward-deployed-engineer@forward-deployed-engineer-agent
+/plugin install forward-deployed-engineer@fde-agent
 ```
 
 </details>
