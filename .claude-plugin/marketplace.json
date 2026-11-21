@@ -1,5 +1,5 @@
 {
-  "name": "forward-deployed-engineer-agent",
+  "name": "fde-agent",
   "owner": { "name": "3ldho98" },
   "plugins": [
     {
