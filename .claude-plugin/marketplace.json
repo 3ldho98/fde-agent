@@ -1,0 +1,11 @@
+{
+  "name": "forward-deployed-engineer-agent",
+  "owner": { "name": "3ldho98" },
+  "plugins": [
+    {
+      "name": "forward-deployed-engineer",
+      "source": "./",
+      "description": "A friendly customer-facing engineer that ships fast custom integrations and prototypes."
+    }
+  ]
+}
