@@ -1,1 +1,8 @@
-
+{
+  "name": "forward-deployed-engineer",
+  "description": "A friendly customer-facing engineer that ships fast custom integrations and prototypes.",
+  "version": "1.0.0",
+  "author": { "name": "3ldho98", "url": "https://github.com/3ldho98" },
+  "license": "MIT",
+  "repository": "https://github.com/3ldho98/forward-deployed-engineer-agent"
+}
